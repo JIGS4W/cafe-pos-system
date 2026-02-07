@@ -8,7 +8,7 @@ Cafe POS คือระบบจัดการร้านกาแฟบน�
 ```text
 cafe-pos-system/
 ├── elysia_bn     # Backend (Elysia + Bun)
-├── react_fn      # Frontend (HTML5 & Vue.js 3)
+├── vue_fn      # Frontend (HTML5 & Vue.js 3)
 └── package-lock.json
 ```
 ---
