@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://cafe-pos-d1.vxugdgk.workers.dev/api/$1"
+    }
+  ]
+}
