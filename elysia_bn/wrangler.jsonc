@@ -13,8 +13,8 @@
   "d1_databases": [
     {
       "binding": "cafe_db",
-      "database_name": "cafe_db",
-      "database_id": "2834cd63-99f3-401f-8c75-5f41dfc3ab9a"
+      "database_name": "db_depp",
+      "database_id": "bd050d3b-8161-48c2-af11-f055d4d99e0e"
     }
   ]
 }

@@ -10,8 +10,8 @@ CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, items TEXT, total REA
 DROP TABLE IF EXISTS orders;
 CREATE TABLE orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    items TEXT, 
-    total REAL, 
+    items TEXT,
+    total REAL,
     note TEXT,  -- ✅ เพิ่มบรรทัดนี้
     status TEXT DEFAULT 'pending', 
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP

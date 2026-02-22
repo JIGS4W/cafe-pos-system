@@ -10,7 +10,7 @@ export default {
         const url = new URL(request.url);
 
         // ✅ 1. เรียกใช้ DB ภายใน function fetch เท่านั้น
-        const db = env.cafe_db; 
+        const db = env.cafe_db;
 
         // ✅ 2. CORS Headers
         const headers = {

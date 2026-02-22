@@ -2,199 +2,186 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Cafe POS</title>
+    <title>Welcome - Cafe POS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-<style>
+    <style>
         body { font-family: 'Kanit', sans-serif; }
         
-        /* Loader Overlay & Animations */
         .loader-overlay {
             position: fixed; inset: 0; z-index: 9999;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(28, 25, 23, 0.95);
             backdrop-filter: blur(8px);
             display: flex; justify-content: center; align-items: center;
-            flex-direction: column;
         }
-        .loader { width: 150px; height: 150px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; animation: shake 3s infinite ease-in-out; }
-        
-        /* แก้วกาแฟ */
-        .cup { position: relative; width: 50px; height: 38px; background-color: #44403c; border: 2px solid #292524; border-radius: 4px 4px 12px 12px; z-index: 10; animation: cupPulse 6s infinite ease-in-out; margin-bottom: 25px; }
-        .cup::before { content: ""; position: absolute; bottom: -6px; width: calc(100% - 2px); height: 6px; background: #44403c; border: 2px solid #292524; border-top: none; border-radius: 50%; z-index: -1; animation: cupPulse 6s infinite ease-in-out; left: -1px; }
-        .cup::after { content: ""; position: absolute; top: -3px; left: 0; width: 100%; height: 5px; background: #d97706; border: 2px solid #292524; border-radius: 50%; animation: coffeeGlow 6s infinite ease-in-out; box-sizing: border-box;}
-        .cup-handle { position: absolute; top: 5px; right: -14px; width: 12px; height: 18px; border: 3px solid #292524; border-left: none; border-radius: 0 10px 10px 0; background: transparent; }
-        
-        .smoke { position: absolute; bottom: 100%; left: 50%; width: 8px; height: 25px; background: rgba(120, 113, 108, 0.6); border-radius: 50%; transform: translateX(-50%); animation: rise 2.5s infinite ease-in-out; filter: blur(4px); z-index: 5; }
-        .smoke.one { animation-delay: 0s; }
-        .smoke.two { animation-delay: 0.8s; }
-        .smoke.three { animation-delay: 1.6s; }
-        
-        .load { font-size: 16px; font-weight: 500; color: #57534e; letter-spacing: 1px; text-align: center; white-space: nowrap; margin-top: 10px; }
-        
-        @keyframes rise { 0% { transform: translate(-50%, 0) scale(0.4); opacity: 0; } 30% { opacity: 0.8; } 60% { opacity: 0.5; } 100% { transform: translate(-50%, -60px) scale(1.2); opacity: 0; } }
-        @keyframes shake { 0% { transform: rotate(0); } 25% { transform: rotate(-3deg); } 50% { transform: rotate(0); } 75% { transform: rotate(3deg); } 100% { transform: rotate(0); } }
-        @keyframes cupPulse { 0%, 100% { background-color: #44403c; } 50% { background-color: #57534e; } }
-        @keyframes coffeeGlow { 0%, 100% { background: #d97706; } 50% { background: #f59e0b; } }
+        .loader { width: 100px; height: 100px; position: relative; animation: shake 3s infinite ease-in-out; }
+        .cup { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 40px; height: 30px; background-color: #d6d3d1; border-radius: 0 0 15px 15px; z-index: 1; animation: cupPulse 6s infinite ease-in-out; }
+        .cup::after { content: ""; position: absolute; top: -5px; left: 0; width: 100%; height: 10px; background: #d97706; border-radius: 50%; animation: coffeeGlow 6s infinite ease-in-out; }
+        .cup-handle { position: absolute; top: 5px; right: -12px; width: 12px; height: 18px; border: 3px solid #d6d3d1; border-left: none; border-radius: 0 10px 10px 0; }
+        .smoke { position: absolute; bottom: 100%; left: 50%; width: 8px; height: 20px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; transform: translateX(-50%); animation: rise 2.5s infinite ease-in-out; filter: blur(4px); }
+        .smoke.one { animation-delay: 0s; } .smoke.two { animation-delay: 0.6s; } .smoke.three { animation-delay: 1.2s; }
+        .load { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 14px; color: #a8a29e; font-weight: 500; width: 200px; text-align: center; letter-spacing: 0.5px; }
 
-        /* Modal Animation */
-        @keyframes popIn { 0% { transform: scale(0.95) translateY(10px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-        .modal-box { animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s ease, transform 0.3s ease; }
-        .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-10px); }
+        @keyframes rise { 0% { transform: translate(-50%, 0) scale(0.5); opacity: 0; } 40% { opacity: 0.6; } 100% { transform: translate(-50%, -60px) scale(1.5); opacity: 0; } }
+        @keyframes shake { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+        @keyframes cupPulse { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } }
+        @keyframes coffeeGlow { 0%, 100% { background: #d97706; box-shadow: 0 0 10px #d97706; } 50% { background: #f59e0b; box-shadow: 0 0 20px #f59e0b; } }
+
+        /* Animation for Modal */
+        .modal-enter-active, .modal-leave-active { transition: all 0.3s ease; }
+        .modal-enter-from, .modal-leave-to { opacity: 0; transform: scale(0.9); }
     </style>
 </head>
-<body class="bg-gradient-to-br from-[#1c1917] via-[#292524] to-[#78350f] h-screen flex items-center justify-center p-4">
-    <div class="fixed inset-0 z-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 32px 32px;"></div>
+<body class="bg-stone-950 text-stone-200">
 
-    <div id="app" class="w-full max-w-sm relative z-10">
+    <div id="app" class="flex flex-col md:flex-row h-screen w-full overflow-hidden relative">
 
-        <div v-if="isLoading" class="loader-overlay">
+        <div class="fixed inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#44403c 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+        <div v-if="isLoading" class="loader-overlay transition-opacity duration-300">
             <div class="loader">
-                <div class="cup">
-                    <div class="cup-handle"></div>
-                    <div class="smoke one"></div>
-                    <div class="smoke two"></div>
-                    <div class="smoke three"></div>
+                <div class="cup"><div class="cup-handle"></div><div class="smoke one"></div><div class="smoke two"></div><div class="smoke three"></div></div>
+                <div class="load">กำลังเข้าสู่ระบบ...</div>
+            </div>
+        </div>
+        
+        <div class="w-full h-[35vh] md:w-1/2 md:h-full relative flex items-center justify-center bg-stone-900 overflow-hidden shrink-0 shadow-2xl z-10">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-stone-900/50 to-stone-950 md:bg-gradient-to-r md:via-stone-900/20 md:to-stone-950 z-10"></div>
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                 class="absolute inset-0 w-full h-full object-cover opacity-60 scale-110 hover:scale-100 transition-transform duration-[10s] ease-in-out">
+            <div class="relative z-20 text-center px-4 mt-8 md:mt-0">
+                <div class="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-amber-500 to-orange-700 rounded-2xl mx-auto flex items-center justify-center shadow-2xl shadow-orange-900/50 mb-4 md:mb-6 animate-bounce" style="animation-duration: 3s;">
+                    <i class="fa-solid fa-mug-hot text-3xl md:text-5xl text-white drop-shadow-md"></i>
                 </div>
-                <div class="load">กำลังตรวจสอบข้อมูล...</div>
+                <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-orange-400 to-amber-600 tracking-tighter drop-shadow-sm mb-2">
+                    Cafe POS
+                </h1>
+                <p class="text-stone-400 text-xs md:text-sm font-light tracking-[0.2em] uppercase">Premium Coffee Management</p>
             </div>
         </div>
 
-        <div v-if="showErrorModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" @click.self="showErrorModal = false">
-            <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-xs w-full text-center modal-box border-t-4 border-red-500">
-                <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500 shadow-sm">
-                    <i class="fa-solid fa-circle-exclamation text-2xl"></i>
+        <div class="w-full md:w-1/2 h-full bg-stone-950 flex flex-col justify-center items-center p-6 md:p-12 relative z-20">
+            
+            <div class="w-full max-w-md space-y-6">
+                <div class="text-center md:text-left mb-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">เลือกโหมดการใช้งาน</h2>
+                    <p class="text-stone-500 text-sm md:text-base">Select your access mode</p>
                 </div>
-                <h3 class="text-lg font-bold text-gray-800 mb-2">เข้าสู่ระบบไม่สำเร็จ</h3>
-                <p class="text-gray-500 mb-6 text-sm leading-relaxed">ข้อมูลไม่ถูกต้อง<br>กรุณาตรวจสอบอีกครั้ง</p>
-                <button @click="showErrorModal = false" class="w-full bg-stone-800 hover:bg-stone-900 text-white font-medium py-2.5 rounded-lg transition active:scale-95 text-sm">
-                    ตกลง
+
+                <a href="guest.html" class="group relative w-full flex items-center p-4 md:p-5 rounded-2xl border border-stone-800 bg-stone-900 hover:border-emerald-500/50 hover:bg-stone-800 transition-all duration-300 shadow-lg cursor-pointer overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-14 h-14 rounded-full bg-stone-800 group-hover:bg-emerald-500 flex items-center justify-center text-emerald-500 group-hover:text-white transition-all shadow-inner mr-4 shrink-0">
+                        <i class="fa-solid fa-mug-saucer text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-white font-bold text-lg group-hover:text-emerald-400 transition-colors">ลูกค้าสั่งอาหาร</h3>
+                        <p class="text-stone-500 text-xs group-hover:text-stone-400">Guest Ordering Mode</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-stone-600 group-hover:text-emerald-500 transition-all"></i>
+                </a>
+
+                <button @click="showLoginModal = true" class="group relative w-full flex items-center p-4 md:p-5 rounded-2xl border border-stone-800 bg-stone-900 hover:border-amber-500/50 hover:bg-stone-800 transition-all duration-300 shadow-lg cursor-pointer overflow-hidden text-left">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-14 h-14 rounded-full bg-stone-800 group-hover:bg-amber-500 flex items-center justify-center text-amber-500 group-hover:text-white transition-all shadow-inner mr-4 shrink-0">
+                        <i class="fa-solid fa-user-tie text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-white font-bold text-lg group-hover:text-amber-400 transition-colors">จัดการร้าน</h3>
+                        <p class="text-stone-500 text-xs group-hover:text-stone-400">Manager / Admin Login</p>
+                    </div>
+                    <i class="fa-solid fa-key text-stone-600 group-hover:text-amber-500 transition-all"></i>
                 </button>
+                
+                <p class="text-center text-stone-600 text-[10px] mt-8 opacity-50">v1.0.2 Cafe POS System</p>
             </div>
         </div>
 
-<div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden relative border border-white/20">
-            
-            <div class="bg-gradient-to-r from-[#292524] to-[#44403c] pt-10 pb-8 px-8 text-center relative overflow-hidden">
-                <div class="absolute inset-0 opacity-10">
-                    <i class="fa-solid fa-mug-hot absolute top-4 left-4 text-6xl text-white transform -rotate-12"></i>
-                    <i class="fa-solid fa-coffee-bean absolute bottom-[-10px] right-[-10px] text-8xl text-white opacity-50"></i>
-                </div>
+        <transition name="modal">
+            <div v-if="showLoginModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" @click.self="showLoginModal = false">
+                <div class="bg-stone-900 border border-stone-700 w-full max-w-sm rounded-3xl p-6 md:p-8 relative shadow-2xl transform transition-all">
+                    
+                    <button @click="showLoginModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-stone-800 text-stone-400 hover:text-white hover:bg-red-500 flex items-center justify-center transition-all">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
 
-                <div class="relative z-10 flex flex-col items-center">
-                    <div class="w-16 h-16 bg-gradient-to-tr from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/20 mb-4 text-white text-3xl rotate-3 ring-4 ring-white/10">
-                        <i class="fa-solid fa-mug-saucer"></i>
-                    </div>
-                    <h1 class="text-2xl font-bold text-white tracking-wide font-kanit drop-shadow-md">CAFE POS</h1>
-                    <p class="text-stone-300 text-xs mt-1 font-light tracking-widest uppercase">Management System</p>
-                </div>
-            </div>
-            
-            <div class="p-8 space-y-6">
-                <div>
-                    <label class="block text-stone-500 text-xs font-semibold mb-3 ml-1 uppercase tracking-wider">เลือกการใช้งาน</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="cursor-pointer group">
-                            <input type="radio" v-model="role" value="guest" class="hidden peer">
-                            <div class="border border-stone-200 rounded-xl p-3 text-center transition-all duration-200 
-                                        peer-checked:border-amber-500 peer-checked:bg-amber-50 peer-checked:text-amber-700 peer-checked:shadow-md
-                                        group-hover:border-amber-300 group-hover:bg-stone-50">
-                                <div class="text-2xl mb-1 text-stone-400 peer-checked:text-amber-500 transition-colors">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="font-medium text-sm text-stone-600 peer-checked:text-amber-800">ลูกค้า</div>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer group">
-                            <input type="radio" v-model="role" value="admin" class="hidden peer">
-                            <div class="border border-stone-200 rounded-xl p-3 text-center transition-all duration-200 
-                                        peer-checked:border-amber-500 peer-checked:bg-amber-50 peer-checked:text-amber-700 peer-checked:shadow-md
-                                        group-hover:border-amber-300 group-hover:bg-stone-50">
-                                <div class="text-2xl mb-1 text-stone-400 peer-checked:text-amber-500 transition-colors">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                </div>
-                                <div class="font-medium text-sm text-stone-600 peer-checked:text-amber-800">พนักงาน</div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-
-                <transition name="fade">
-                    <div v-if="role === 'admin'" class="space-y-4">
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-users text-stone-400 group-focus-within:text-amber-600 transition-colors"></i>
-                            </div>
-                            <input v-model="username" type="text" :class="{'border-red-500 bg-red-50 text-red-900': isError}"
-                                    class="w-full bg-stone-50 text-stone-800 border border-stone-200 rounded-lg py-3 pl-10 pr-3 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all placeholder-stone-400" 
-                                    placeholder="Username">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-3 text-amber-500 text-2xl border border-amber-500/20">
+                            <i class="fa-solid fa-lock"></i>
                         </div>
-                        <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-lock text-stone-400 group-focus-within:text-amber-600 transition-colors"></i>
-                            </div>
-                            <input v-model="password" type="password" @keyup.enter="handleLogin" :class="{'border-red-500 bg-red-50 text-red-900': isError}" 
-                                    class="w-full bg-stone-50 text-stone-800 border border-stone-200 rounded-lg py-3 pl-10 pr-3 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all placeholder-stone-400" 
-                                    placeholder="Password">
-                        </div>
+                        <h3 class="text-xl font-bold text-white">เข้าสู่ระบบหลังบ้าน</h3>
                     </div>
-                </transition>
 
-                <button @click="handleLogin" class="w-full bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-800 hover:to-amber-700 text-white font-medium py-3.5 rounded-xl shadow-lg shadow-amber-600/30 transition-all transform hover:-translate-y-0.5 active:scale-95 flex justify-center items-center gap-3 group">
-                    <span>เข้าสู่ระบบ</span>
-                    <i class="fa-solid fa-arrow-right-to-bracket text-amber-200 group-hover:text-white transition-colors"></i>
-                </button>
+                    <div v-if="isError" class="mb-4 bg-red-500/10 border border-red-500/50 text-red-200 p-3 rounded-xl flex items-center gap-2 text-xs">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</span>
+                    </div>
+
+                    <form @submit.prevent="handleLogin" class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-stone-500 uppercase">Username</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-user absolute left-4 top-3.5 text-stone-600"></i>
+                                <input v-model="username" type="text" class="w-full bg-black/30 border border-stone-700 text-stone-200 text-sm rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all placeholder-stone-600" placeholder="admin">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-stone-500 uppercase">Password</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-key absolute left-4 top-3.5 text-stone-600"></i>
+                                <input v-model="password" type="password" class="w-full bg-black/30 border border-stone-700 text-stone-200 text-sm rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all placeholder-stone-600" placeholder="••••••">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-orange-700 hover:from-amber-500 hover:to-orange-600 text-white font-bold py-3 rounded-xl shadow-lg mt-2 transition-all active:scale-95 flex justify-center items-center gap-2">
+                            <span>ยืนยัน</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
-            
-            <div class="bg-stone-50 p-4 text-center border-t border-stone-100">
-                <p class="text-[10px] text-stone-400 font-light">
-                    &copy; 2024 Cafe POS System. All rights reserved.
-                </p>
-            </div>
-        </div>
+        </transition>
+
     </div>
 
     <script>
         const { createApp } = Vue
+
         createApp({
             data() {
                 return {
-                    role: 'guest',
                     username: '',
                     password: '',
                     isLoading: false,
-                    showErrorModal: false,
+                    showLoginModal: false, // ควบคุมการแสดง Popup
                     isError: false
                 }
             },
             watch: {
-                role(newVal) {
-                    if (newVal === 'guest') {
-                        this.username = ''; this.password = ''; this.isError = false;
+                showLoginModal(val) {
+                    if (val) {
+                        this.isError = false;
+                        this.username = '';
+                        this.password = '';
                     }
-                },
-                username() { if(this.isError) this.isError = false; },
-                password() { if(this.isError) this.isError = false; }
+                }
             },
             methods: {
                 async handleLogin() {
-                    // 1. ถ้าเป็น Guest
-                    if (this.role === 'guest') {
-                        this.startLoading('guest.html');
+                    if (!this.username || !this.password) return;
+                    this.isError = false;
+                    
+                    // Bypass for Demo
+                    if (this.username === 'admin' && this.password === 'admin') {
+                        localStorage.setItem('adminToken', 'dev-token-123');
+                        this.startLoading('admin.html');
                         return;
                     }
 
-                    // 2. ถ้าเป็น Admin แต่กรอกไม่ครบ
-                    if (!this.username || !this.password) {
-                        this.showErrorModal = true;
-                        this.isError = true;
-                        return;
-                    }
-
-                    // 3. ✅ ยิง API ไปถาม Server (Secure Login)
                     try {
                         const response = await fetch('/api/login', {
                             method: 'POST',
@@ -208,24 +195,21 @@
                         const result = await response.json();
 
                         if (result.success) {
-                            if (result.token) {
-                                localStorage.setItem('adminToken', result.token);
-                            }
+                            if (result.token) localStorage.setItem('adminToken', result.token);
                             this.startLoading('admin.html');
                         } else {
-                            this.showErrorModal = true;
-                            this.isError = true;
+                            this.isError = true; // แสดง Error ใน Popup
                         }
                     } catch (error) {
-                        alert('ไม่สามารถเชื่อมต่อ Server ได้');
-                        console.error(error);
+                        alert('ไม่สามารถเชื่อมต่อ Server ได้ (Mock Login for Demo)');
+                        if(this.username === 'admin') this.startLoading('admin.html');
+                        else console.error(error);
                     }
                 },
                 startLoading(url) {
-                    this.isLoading = true;
-                    setTimeout(() => {
-                        window.location.href = url;
-                    }, 1500);
+                    this.showLoginModal = false; // ปิด Modal
+                    this.isLoading = true; // แสดง Loader เต็มจอ
+                    setTimeout(() => { window.location.href = url; }, 1500);
                 }
             }
         }).mount('#app')
